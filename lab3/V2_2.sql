@@ -11,8 +11,8 @@ ADD
 	JobTitle NVARCHAR(50), 
 	BirthDate DATE, 
 	HireDate DATE,
-	HireAge AS DATEDIFF(YEAR, BirthDate, HireDate)	
-;
+	HireAge AS DATEDIFF(YEAR, BirthDate, HireDate
+);
 GO
 
 /*
@@ -116,4 +116,8 @@ DELETE;
 GO
 
 SET IDENTITY_INSERT dbo.PersonPhone OFF;
+GO
+
+SELECT COUNT(*) FROM dbo.PersonPhone
+WHERE BusinessEntityID = 275;
 GO
