@@ -178,12 +178,13 @@ SET CostRate = 8.8
 WHERE Name = 'Blade';
 GO
 
-SELECT ProductInventory.LocationID, Product.Name, CostRate FROM Production.Location
-INNER JOIN Production.ProductInventory
-ON Production.ProductInventory.LocationID = Production.Location.LocationID
-INNER JOIN Production.Product
-ON Production.Product.ProductID = Production.ProductInventory.ProductID
-WHERE Product.Name = 'Blade';
+SELECT ppi.LocationID, p.Name, CostRate 
+FROM Production.Location
+INNER JOIN Production.ProductInventory AS ppi
+ON ppi.LocationID = Production.Location.LocationID
+INNER JOIN Production.Product AS p
+ON p.ProductID = ppi.ProductID
+WHERE p.Name = 'Blade';
 GO
 
 UPDATE ProductInfoView
@@ -191,9 +192,10 @@ SET Quantity = 8
 WHERE Name = 'Blade';
 GO
 
-SELECT Name, Quantity FROM Production.ProductInventory
-INNER JOIN Production.Product
-ON Production.ProductInventory.ProductID = Production.Product.ProductID
+SELECT Name, Quantity
+FROM Production.ProductInventory AS ppi
+INNER JOIN Production.Product AS p
+ON ppi.ProductID = p.ProductID
 WHERE Name = 'Blade';
 GO
 
@@ -202,10 +204,10 @@ WHERE Name = 'Blade';
 GO
 
 SELECT COUNT(*) AS recCount
-FROM Production.Location
-INNER JOIN Production.ProductInventory
-ON Production.ProductInventory.LocationID = Production.Location.LocationID
-INNER JOIN Production.Product
-ON Production.Product.ProductID = Production.ProductInventory.ProductID
-WHERE Product.Name = 'Blade';
+FROM Production.Location AS l
+INNER JOIN Production.ProductInventory AS ppi
+ON ppi.LocationID = l.LocationID
+INNER JOIN Production.Product AS p
+ON p.ProductID = ppi.ProductID
+WHERE p.Name = 'Blade';
 GO
