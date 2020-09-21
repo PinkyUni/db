@@ -11,3 +11,6 @@
 
 ## lab4
 Работа с представлением VIEW. Индексированное представление. Изменение данных в таблице через представление. Создание AFTER DML триггера для таблицы. Логгирование изменений в history таблицу. Создание INSTEAD OF DML триггера для представления.
+
+## lab5
+Пользовательские функции: scalar-valued, inline table-valued, multistatement table-valued. Операторы CROSS APPLY и OUTER APPLY.
