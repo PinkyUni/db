@@ -37,21 +37,20 @@ GO
 	Выберите только сотрудников с JobTitle = ‘Sales Representative’. 
 	Выборку данных для вставки в табличную переменную осуществите в Common Table Expression (CTE).
 */
-delete from #PersonPhone;
 WITH cte AS (
-SELECT 
-	dbo.PersonPhone.BusinessEntityID,
-	dbo.PersonPhone.PhoneNumber,
-	dbo.PersonPhone.PhoneNumberTypeID,
-	dbo.PersonPhone.ModifiedDate,
-	dbo.PersonPhone.ID,
-	HumanResources.Employee.JobTitle, 
-	HumanResources.Employee.BirthDate, 
-	HumanResources.Employee.HireDate
-FROM dbo.PersonPhone
-INNER JOIN HumanResources.Employee
-ON HumanResources.Employee.BusinessEntityID = dbo.PersonPhone.BusinessEntityID
-WHERE HumanResources.Employee.JobTitle = 'Sales Representative'
+	SELECT 
+		pp.BusinessEntityID,
+		pp.PhoneNumber,
+		pp.PhoneNumberTypeID,
+		pp.ModifiedDate,
+		pp.ID,
+		emp.JobTitle, 
+		emp.BirthDate, 
+		emp.HireDate
+	FROM dbo.PersonPhone AS pp
+	INNER JOIN HumanResources.Employee AS emp
+	ON emp.BusinessEntityID = pp.BusinessEntityID
+	WHERE emp.JobTitle = 'Sales Representative'
 )
 INSERT INTO #PersonPhone  
 SELECT * FROM cte;

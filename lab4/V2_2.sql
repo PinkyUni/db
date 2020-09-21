@@ -9,23 +9,23 @@ GO
 CREATE VIEW ProductInfoView 
 WITH SCHEMABINDING, ENCRYPTION AS 
 SELECT 
-	Production.Location.LocationID,
-	Production.Location.Name AS LocationName,
-	Production.Location.CostRate,
-	Production.Location.Availability,
-	Production.Location.ModifiedDate AS LocationModifiedDate,
-	Production.ProductInventory.ProductID,
-	Production.ProductInventory.Shelf,
-	Production.ProductInventory.Bin,
-	Production.ProductInventory.Quantity,
-	Production.ProductInventory.rowguid,
-	Production.ProductInventory.ModifiedDate AS ProductInventoryModifiedDate,
-	Production.Product.Name
-FROM Production.Location
-INNER JOIN Production.ProductInventory
-ON Production.Location.LocationID = Production.ProductInventory.LocationID
-INNER JOIN Production.Product
-ON Production.ProductInventory.ProductID = Production.Product.ProductID;
+	l.LocationID,
+	l.Name AS LocationName,
+	l.CostRate,
+	l.Availability,
+	l.ModifiedDate AS LocationModifiedDate,
+	ppi.ProductID,
+	ppi.Shelf,
+	ppi.Bin,
+	ppi.Quantity,
+	ppi.rowguid,
+	ppi.ModifiedDate AS ProductInventoryModifiedDate,
+	p.Name
+FROM Production.Location AS l
+INNER JOIN Production.ProductInventory AS ppi
+ON l.LocationID = ppi.LocationID
+INNER JOIN Production.Product AS p
+ON ppi.ProductID = p.ProductID;
 GO
 
 CREATE UNIQUE CLUSTERED INDEX ProductInfo_IX
@@ -49,22 +49,22 @@ BEGIN
 		Availability,
 		LocationModifiedDate
 	FROM inserted 
-	INNER JOIN Production.Product
-	ON inserted.Name = Production.Product.Name;
+	INNER JOIN Production.Product AS p
+	ON inserted.Name = p.Name;
 	INSERT INTO Production.ProductInventory
 	SELECT
-		Production.Product.ProductID,
-		Production.Location.LocationID,
+		p.ProductID,
+		l.LocationID,
 		Shelf,
 		Bin,
 		Quantity,
 		inserted.rowguid,
 		ProductInventoryModifiedDate
 	FROM inserted
-	INNER JOIN Production.Product
-	ON inserted.Name = Production.Product.Name
-	INNER JOIN Production.Location
-	ON inserted.LocationName = Production.Location.Name;
+	INNER JOIN Production.Product AS p
+	ON inserted.Name = p.Name
+	INNER JOIN Production.Location AS l
+	ON inserted.LocationName = l.Name;
 END;
 GO
 
@@ -85,9 +85,9 @@ BEGIN
 			CostRate = inserted.CostRate,
 			Availability = inserted.Availability,
 			ModifiedDate = inserted.LocationModifiedDate
-		FROM Production.Location
+		FROM Production.Location AS l
 		INNER JOIN inserted
-		ON inserted.LocationID = Production.Location.LocationID;
+		ON inserted.LocationID = l.LocationID;
 		UPDATE Production.ProductInventory
 		SET 
 			Shelf = inserted.Shelf,
@@ -95,9 +95,9 @@ BEGIN
 			Quantity = inserted.Quantity,
 			rowguid = inserted.rowguid,
 			ModifiedDate = inserted.ProductInventoryModifiedDate
-		FROM Production.ProductInventory
+		FROM Production.ProductInventory AS ppi
 		INNER JOIN inserted
-		ON Production.ProductInventory.ProductID = inserted.ProductID;		
+		ON ppi.ProductID = inserted.ProductID;		
 	END;
 END;
 GO
@@ -128,7 +128,7 @@ BEGIN
 	FROM Production.Location AS l
 	WHERE LocationID IN (SELECT * FROM #locations);
 END;
-
+GO
 /*
 	c) ¬ставьте новую строку в представление, указав новые данные дл€ Location и ProductInventory, 
 	но дл€ существующего Product (например дл€ СAdjustable RaceТ). 
@@ -147,7 +147,7 @@ INSERT INTO ProductInfoView (
 	ProductInventoryModifiedDate,
 	Name
 ) VALUES (
-	'smth',
+	'SHELF',
 	66.6,
 	0.6,
 	CURRENT_TIMESTAMP,

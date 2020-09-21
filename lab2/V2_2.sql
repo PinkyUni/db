@@ -46,16 +46,16 @@ GO
 */
 INSERT INTO dbo.PersonPhone
 SELECT 
-	Person.PersonPhone.BusinessEntityID, 
-	Person.PersonPhone.PhoneNumber, 
-	Person.PersonPhone.PhoneNumberTypeID, 
-	Person.PersonPhone.ModifiedDate
-FROM Person.PersonPhone 
-INNER JOIN HumanResources.Employee
-ON Person.PersonPhone.BusinessEntityID = HumanResources.Employee.BusinessEntityID
-INNER JOIN HumanResources.EmployeeDepartmentHistory
-ON HumanResources.Employee.BusinessEntityID = HumanResources.EmployeeDepartmentHistory.BusinessEntityID
-WHERE  PhoneNumber NOT LIKE '%[()]%' AND Employee.HireDate = EmployeeDepartmentHistory.StartDate;
+	pp.BusinessEntityID, 
+	pp.PhoneNumber, 
+	pp.PhoneNumberTypeID, 
+	pp.ModifiedDate
+FROM Person.PersonPhone AS pp
+INNER JOIN HumanResources.Employee AS emp
+ON pp.BusinessEntityID = emp.BusinessEntityID
+INNER JOIN HumanResources.EmployeeDepartmentHistory AS edh
+ON emp.BusinessEntityID = edh.BusinessEntityID
+WHERE  PhoneNumber NOT LIKE '%[()]%' AND emp.HireDate = edh.StartDate;
 GO
 
 SELECT * FROM dbo.PersonPhone;

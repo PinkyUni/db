@@ -6,12 +6,12 @@ GO
 	В каких отделах компании он работал, с указанием периодов работы в каждом отделе.
 */
 
-SELECT Employee.BusinessEntityID, JobTitle, Department.Name AS DepartmentName, StartDate, EndDate
-FROM HumanResources.Employee
-INNER JOIN HumanResources.EmployeeDepartmentHistory 
-ON HumanResources.Employee.BusinessEntityID = EmployeeDepartmentHistory.BusinessEntityID
-INNER JOIN HumanResources.Department 
-ON EmployeeDepartmentHistory.DepartmentID = Department.DepartmentID
+SELECT emp.BusinessEntityID, JobTitle, dep.Name AS DepartmentName, StartDate, EndDate
+FROM HumanResources.Employee AS emp
+INNER JOIN HumanResources.EmployeeDepartmentHistory AS eph
+ON emp.BusinessEntityID = eph.BusinessEntityID
+INNER JOIN HumanResources.Department AS dep
+ON eph.DepartmentID = dep.DepartmentID
 WHERE JobTitle = 'Purchasing Manager';
 GO
 
@@ -19,11 +19,11 @@ GO
 	Вывести на экран список сотрудников, у которых почасовая ставка изменялась хотя бы один раз.
 */
 
-SELECT Employee.BusinessEntityID, JobTitle, COUNT(*) AS RateCount
-FROM HumanResources.EmployeePayHistory
-INNER JOIN HumanResources.Employee
-ON HumanResources.Employee.BusinessEntityID = EmployeePayHistory.BusinessEntityID 
-GROUP BY Employee.BusinessEntityID, JobTitle
+SELECT emp.BusinessEntityID, JobTitle, COUNT(*) AS RateCount
+FROM HumanResources.EmployeePayHistory AS eph
+INNER JOIN HumanResources.Employee AS emp
+ON emp.BusinessEntityID = eph.BusinessEntityID 
+GROUP BY emp.BusinessEntityID, JobTitle
 HAVING COUNT(*) > 1;
 GO
 
@@ -32,13 +32,13 @@ GO
 	Вывести только актуальную информацию. Если сотрудник больше не работает в отделе — не учитывать такие данные
 */
 
-SELECT Department.DepartmentID, Department.Name, MAX(EmployeePayHistory.Rate) AS MaxRate
-FROM HumanResources.EmployeePayHistory
-INNER JOIN HumanResources.EmployeeDepartmentHistory
-ON  HumanResources.EmployeeDepartmentHistory.BusinessEntityID = HumanResources.EmployeePayHistory.BusinessEntityID
-INNER JOIN HumanResources.Department
-ON HumanResources.Department.DepartmentID = HumanResources.EmployeeDepartmentHistory.DepartmentID
+SELECT dep.DepartmentID, dep.Name, MAX(eph.Rate) AS MaxRate
+FROM HumanResources.EmployeePayHistory AS eph
+INNER JOIN HumanResources.EmployeeDepartmentHistory AS edh
+ON edh.BusinessEntityID = eph.BusinessEntityID
+INNER JOIN HumanResources.Department AS dep
+ON dep.DepartmentID = edh.DepartmentID
 WHERE EndDate IS NULL
-GROUP BY Department.DepartmentID, Department.Name
-ORDER BY Department.DepartmentID;
+GROUP BY dep.DepartmentID, dep.Name
+ORDER BY dep.DepartmentID;
 GO

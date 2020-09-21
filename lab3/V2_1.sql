@@ -20,17 +20,16 @@ DECLARE @personPhone TABLE (
 	HireDate DATE NULL);
 INSERT INTO @personPhone 
 SELECT 
-	PersonPhone.BusinessEntityID, 
+	pp.BusinessEntityID, 
 	PhoneNumber,
 	PhoneNumberTypeID,
-	PersonPhone.ModifiedDate,
+	pp.ModifiedDate,
 	ID,
-	HumanResources.Employee.HireDate
-	FROM dbo.PersonPhone
-INNER JOIN HumanResources.Employee
-ON dbo.PersonPhone.BusinessEntityID = HumanResources.Employee.BusinessEntityID;
+	emp.HireDate
+FROM dbo.PersonPhone AS pp
+INNER JOIN HumanResources.Employee AS emp
+ON pp.BusinessEntityID = emp.BusinessEntityID;
 
-/*SELECT * FROM @personPhone;*/
 
 /*
 	c) обновите HireDate в dbo.PersonPhone данными из табличной переменной, добавив к HireDate один день;
@@ -38,9 +37,9 @@ ON dbo.PersonPhone.BusinessEntityID = HumanResources.Employee.BusinessEntityID;
 
  UPDATE dbo.PersonPhone
  SET dbo.PersonPhone.HireDate = DATEADD(DAY, 1, pPhone.HireDate)
- FROM dbo.PersonPhone 
+ FROM dbo.PersonPhone AS pp
  INNER JOIN @personPhone AS pPhone
- ON dbo.PersonPhone.BusinessEntityID = pPhone.BusinessEntityID;
+ ON pp.BusinessEntityID = pPhone.BusinessEntityID;
 
  SELECT * FROM dbo.PersonPhone;
  GO	
@@ -52,8 +51,8 @@ ON dbo.PersonPhone.BusinessEntityID = HumanResources.Employee.BusinessEntityID;
  DELETE FROM dbo.PersonPhone
  WHERE EXISTS (
 	SELECT BusinessEntityID
-	FROM HumanResources.EmployeePayHistory
-	WHERE dbo.PersonPhone.BusinessEntityID = HumanResources.EmployeePayHistory.BusinessEntityID AND Rate > 50
+	FROM HumanResources.EmployeePayHistory AS eph
+	WHERE dbo.PersonPhone.BusinessEntityID = eph.BusinessEntityID AND Rate > 50
 );
 GO
 
