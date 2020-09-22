@@ -16,7 +16,7 @@ AS
 BEGIN
 	DECLARE @query NVARCHAR(MAX);
 	SET @query = 'SELECT * FROM (
-						SELECT ps.ProductSubcategoryID, ps.Name, p.Weight, p.Color
+						SELECT ps.Name, p.Weight, p.Color
 						FROM Production.ProductSubcategory AS ps
 						INNER JOIN Production.Product AS p
 						ON p.ProductSubcategoryID = ps.ProductSubcategoryID) AS s
