@@ -14,3 +14,6 @@
 
 ## lab5
 Пользовательские функции: scalar-valued, inline table-valued, multistatement table-valued. Операторы CROSS APPLY и OUTER APPLY.
+
+## lab6
+Создание хранимых процедур. Использование динамического SQL. Оператор PIVOT для формирования сводной таблицы.
