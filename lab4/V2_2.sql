@@ -2,9 +2,9 @@ USE AdventureWorks2012;
 GO
 
 /*
-	a) Создайте представление VIEW, отображающее данные из таблиц Production.Location и Production.ProductInventory, 
-	а также Name из таблицы Production.Product. Сделайте невозможным просмотр исходного кода представления. 
-	Создайте уникальный кластерный индекс в представлении по полям LocationID,ProductID.
+	a) РЎРѕР·РґР°Р№С‚Рµ РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ VIEW, РѕС‚РѕР±СЂР°Р¶Р°СЋС‰РµРµ РґР°РЅРЅС‹Рµ РёР· С‚Р°Р±Р»РёС† Production.Location Рё Production.ProductInventory, 
+	Р° С‚Р°РєР¶Рµ Name РёР· С‚Р°Р±Р»РёС†С‹ Production.Product. РЎРґРµР»Р°Р№С‚Рµ РЅРµРІРѕР·РјРѕР¶РЅС‹Рј РїСЂРѕСЃРјРѕС‚СЂ РёСЃС…РѕРґРЅРѕРіРѕ РєРѕРґР° РїСЂРµРґСЃС‚Р°РІР»РµРЅРёСЏ. 
+	РЎРѕР·РґР°Р№С‚Рµ СѓРЅРёРєР°Р»СЊРЅС‹Р№ РєР»Р°СЃС‚РµСЂРЅС‹Р№ РёРЅРґРµРєСЃ РІ РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРё РїРѕ РїРѕР»СЏРј LocationID,ProductID.
 */
 CREATE VIEW ProductInfoView 
 WITH SCHEMABINDING, ENCRYPTION AS 
@@ -33,10 +33,10 @@ CREATE UNIQUE CLUSTERED INDEX ProductInfo_IX
 GO
 
 /*
-	b) Создайте три INSTEAD OF триггера для представления на операции INSERT, UPDATE, DELETE. 
-	Каждый триггер должен выполнять соответствующие операции в таблицах Production.Location 
-	и Production.ProductInventory для указанного Product Name. 
-	Обновление и удаление строк производите только в таблицах Production.Location и Production.ProductInventory, но не в Production.Product.
+	b) РЎРѕР·РґР°Р№С‚Рµ С‚СЂРё INSTEAD OF С‚СЂРёРіРіРµСЂР° РґР»СЏ РїСЂРµРґСЃС‚Р°РІР»РµРЅРёСЏ РЅР° РѕРїРµСЂР°С†РёРё INSERT, UPDATE, DELETE. 
+	РљР°Р¶РґС‹Р№ С‚СЂРёРіРіРµСЂ РґРѕР»Р¶РµРЅ РІС‹РїРѕР»РЅСЏС‚СЊ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёРµ РѕРїРµСЂР°С†РёРё РІ С‚Р°Р±Р»РёС†Р°С… Production.Location 
+	Рё Production.ProductInventory РґР»СЏ СѓРєР°Р·Р°РЅРЅРѕРіРѕ Product Name. 
+	РћР±РЅРѕРІР»РµРЅРёРµ Рё СѓРґР°Р»РµРЅРёРµ СЃС‚СЂРѕРє РїСЂРѕРёР·РІРѕРґРёС‚Рµ С‚РѕР»СЊРєРѕ РІ С‚Р°Р±Р»РёС†Р°С… Production.Location Рё Production.ProductInventory, РЅРѕ РЅРµ РІ Production.Product.
 */
 CREATE TRIGGER ProductInfo_Ins_TR
 ON ProductInfoView
@@ -130,10 +130,10 @@ BEGIN
 END;
 GO
 /*
-	c) Вставьте новую строку в представление, указав новые данные для Location и ProductInventory, 
-	но для существующего Product (например для ‘Adjustable Race’). 
-	Триггер должен добавить новые строки в таблицы Production.Location и Production.ProductInventory для указанного Product Name. 
-	Обновите вставленные строки через представление. Удалите строки.
+	c) Р’СЃС‚Р°РІСЊС‚Рµ РЅРѕРІСѓСЋ СЃС‚СЂРѕРєСѓ РІ РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ, СѓРєР°Р·Р°РІ РЅРѕРІС‹Рµ РґР°РЅРЅС‹Рµ РґР»СЏ Location Рё ProductInventory, 
+	РЅРѕ РґР»СЏ СЃСѓС‰РµСЃС‚РІСѓСЋС‰РµРіРѕ Product (РЅР°РїСЂРёРјРµСЂ РґР»СЏ вЂAdjustable RaceвЂ™). 
+	РўСЂРёРіРіРµСЂ РґРѕР»Р¶РµРЅ РґРѕР±Р°РІРёС‚СЊ РЅРѕРІС‹Рµ СЃС‚СЂРѕРєРё РІ С‚Р°Р±Р»РёС†С‹ Production.Location Рё Production.ProductInventory РґР»СЏ СѓРєР°Р·Р°РЅРЅРѕРіРѕ Product Name. 
+	РћР±РЅРѕРІРёС‚Рµ РІСЃС‚Р°РІР»РµРЅРЅС‹Рµ СЃС‚СЂРѕРєРё С‡РµСЂРµР· РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ. РЈРґР°Р»РёС‚Рµ СЃС‚СЂРѕРєРё.
 */
 INSERT INTO ProductInfoView (
 	LocationName,

@@ -2,8 +2,8 @@ USE AdventureWorks2012;
 GO
 
 /*
-	Создайте scalar-valued функцию, которая будет принимать в качестве входного параметра id отдела 
-	(HumanResources.Department.DepartmentID) и возвращать количество сотрудников, работающих в отделе.
+	РЎРѕР·РґР°Р№С‚Рµ scalar-valued С„СѓРЅРєС†РёСЋ, РєРѕС‚РѕСЂР°СЏ Р±СѓРґРµС‚ РїСЂРёРЅРёРјР°С‚СЊ РІ РєР°С‡РµСЃС‚РІРµ РІС…РѕРґРЅРѕРіРѕ РїР°СЂР°РјРµС‚СЂР° id РѕС‚РґРµР»Р° 
+	(HumanResources.Department.DepartmentID) Рё РІРѕР·РІСЂР°С‰Р°С‚СЊ РєРѕР»РёС‡РµСЃС‚РІРѕ СЃРѕС‚СЂСѓРґРЅРёРєРѕРІ, СЂР°Р±РѕС‚Р°СЋС‰РёС… РІ РѕС‚РґРµР»Рµ.
 */
 CREATE FUNCTION HumanResources.getDepartmentEmployeeCount(@dID INT)
 RETURNS INT
@@ -26,8 +26,8 @@ WHERE EndDate IS NULL AND DepartmentID = 1;
 GO
 
 /*
-	Создайте inline table-valued функцию, которая будет принимать в качестве входного параметра id отдела 
-	(HumanResources.Department.DepartmentID), а возвращать сотрудников, которые работают в отделе более 11 лет.
+	РЎРѕР·РґР°Р№С‚Рµ inline table-valued С„СѓРЅРєС†РёСЋ, РєРѕС‚РѕСЂР°СЏ Р±СѓРґРµС‚ РїСЂРёРЅРёРјР°С‚СЊ РІ РєР°С‡РµСЃС‚РІРµ РІС…РѕРґРЅРѕРіРѕ РїР°СЂР°РјРµС‚СЂР° id РѕС‚РґРµР»Р° 
+	(HumanResources.Department.DepartmentID), Р° РІРѕР·РІСЂР°С‰Р°С‚СЊ СЃРѕС‚СЂСѓРґРЅРёРєРѕРІ, РєРѕС‚РѕСЂС‹Рµ СЂР°Р±РѕС‚Р°СЋС‚ РІ РѕС‚РґРµР»Рµ Р±РѕР»РµРµ 11 Р»РµС‚.
 */
 CREATE FUNCTION HumanResources.getDepartmentEmployees(@dID INT)
 RETURNS TABLE
@@ -44,8 +44,8 @@ SELECT * FROM HumanResources.getDepartmentEmployees(1);
 GO
 
 /*
-	Вызовите функцию для каждого отдела, применив оператор CROSS APPLY. 
-	Вызовите функцию для каждого отдела, применив оператор OUTER APPLY.
+	Р’С‹Р·РѕРІРёС‚Рµ С„СѓРЅРєС†РёСЋ РґР»СЏ РєР°Р¶РґРѕРіРѕ РѕС‚РґРµР»Р°, РїСЂРёРјРµРЅРёРІ РѕРїРµСЂР°С‚РѕСЂ CROSS APPLY. 
+	Р’С‹Р·РѕРІРёС‚Рµ С„СѓРЅРєС†РёСЋ РґР»СЏ РєР°Р¶РґРѕРіРѕ РѕС‚РґРµР»Р°, РїСЂРёРјРµРЅРёРІ РѕРїРµСЂР°С‚РѕСЂ OUTER APPLY.
 */
 SELECT 
 	dep.DepartmentID,
@@ -76,8 +76,8 @@ ORDER BY dep.DepartmentID;
 GO
 
 /*
-	Измените созданную inline table-valued функцию, сделав ее multistatement table-valued
-	(предварительно сохранив для проверки код создания inline table-valued функции).
+	РР·РјРµРЅРёС‚Рµ СЃРѕР·РґР°РЅРЅСѓСЋ inline table-valued С„СѓРЅРєС†РёСЋ, СЃРґРµР»Р°РІ РµРµ multistatement table-valued
+	(РїСЂРµРґРІР°СЂРёС‚РµР»СЊРЅРѕ СЃРѕС…СЂР°РЅРёРІ РґР»СЏ РїСЂРѕРІРµСЂРєРё РєРѕРґ СЃРѕР·РґР°РЅРёСЏ inline table-valued С„СѓРЅРєС†РёРё).
 */
 CREATE FUNCTION HumanResources.getDepartmentEmployees2(@dID INT)
 RETURNS @emplyees TABLE (

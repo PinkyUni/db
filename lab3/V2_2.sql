@@ -2,9 +2,9 @@ USE AdventureWorks2012;
 GO
 
 /*
-	a) выполните код, созданный во втором задании второй лабораторной работы. 
-	Добавьте в таблицу dbo.PersonPhone поля JobTitle NVARCHAR(50), BirthDate DATE и HireDate DATE. 
-	Также создайте в таблице вычисляемое поле HireAge, считающее количество лет, прошедших между BirthDate и HireDate.
+	a) РІС‹РїРѕР»РЅРёС‚Рµ РєРѕРґ, СЃРѕР·РґР°РЅРЅС‹Р№ РІРѕ РІС‚РѕСЂРѕРј Р·Р°РґР°РЅРёРё РІС‚РѕСЂРѕР№ Р»Р°Р±РѕСЂР°С‚РѕСЂРЅРѕР№ СЂР°Р±РѕС‚С‹. 
+	Р”РѕР±Р°РІСЊС‚Рµ РІ С‚Р°Р±Р»РёС†Сѓ dbo.PersonPhone РїРѕР»СЏ JobTitle NVARCHAR(50), BirthDate DATE Рё HireDate DATE. 
+	РўР°РєР¶Рµ СЃРѕР·РґР°Р№С‚Рµ РІ С‚Р°Р±Р»РёС†Рµ РІС‹С‡РёСЃР»СЏРµРјРѕРµ РїРѕР»Рµ HireAge, СЃС‡РёС‚Р°СЋС‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ Р»РµС‚, РїСЂРѕС€РµРґС€РёС… РјРµР¶РґСѓ BirthDate Рё HireDate.
 */
 ALTER TABLE dbo.PersonPhone 
 ADD 
@@ -16,8 +16,8 @@ ADD
 GO
 
 /*
-	b) создайте временную таблицу #PersonPhone, с первичным ключом по полю BusinessEntityID.
-	Временная таблица должна включать все поля таблицы dbo.PersonPhone за исключением поля HireAge.
+	b) СЃРѕР·РґР°Р№С‚Рµ РІСЂРµРјРµРЅРЅСѓСЋ С‚Р°Р±Р»РёС†Сѓ #PersonPhone, СЃ РїРµСЂРІРёС‡РЅС‹Рј РєР»СЋС‡РѕРј РїРѕ РїРѕР»СЋ BusinessEntityID.
+	Р’СЂРµРјРµРЅРЅР°СЏ С‚Р°Р±Р»РёС†Р° РґРѕР»Р¶РЅР° РІРєР»СЋС‡Р°С‚СЊ РІСЃРµ РїРѕР»СЏ С‚Р°Р±Р»РёС†С‹ dbo.PersonPhone Р·Р° РёСЃРєР»СЋС‡РµРЅРёРµРј РїРѕР»СЏ HireAge.
 */
 CREATE TABLE #PersonPhone (
 	BusinessEntityID INT NOT NULL PRIMARY KEY,
@@ -32,10 +32,10 @@ CREATE TABLE #PersonPhone (
 GO
 
 /*
-	c) заполните временную таблицу данными из dbo.PersonPhone. 
-	Поля JobTitle, BirthDate и HireDate заполните значениями из таблицы HumanResources.Employee. 
-	Выберите только сотрудников с JobTitle = ‘Sales Representative’. 
-	Выборку данных для вставки в табличную переменную осуществите в Common Table Expression (CTE).
+	c) Р·Р°РїРѕР»РЅРёС‚Рµ РІСЂРµРјРµРЅРЅСѓСЋ С‚Р°Р±Р»РёС†Сѓ РґР°РЅРЅС‹РјРё РёР· dbo.PersonPhone. 
+	РџРѕР»СЏ JobTitle, BirthDate Рё HireDate Р·Р°РїРѕР»РЅРёС‚Рµ Р·РЅР°С‡РµРЅРёСЏРјРё РёР· С‚Р°Р±Р»РёС†С‹ HumanResources.Employee. 
+	Р’С‹Р±РµСЂРёС‚Рµ С‚РѕР»СЊРєРѕ СЃРѕС‚СЂСѓРґРЅРёРєРѕРІ СЃ JobTitle = вЂSales RepresentativeвЂ™. 
+	Р’С‹Р±РѕСЂРєСѓ РґР°РЅРЅС‹С… РґР»СЏ РІСЃС‚Р°РІРєРё РІ С‚Р°Р±Р»РёС‡РЅСѓСЋ РїРµСЂРµРјРµРЅРЅСѓСЋ РѕСЃСѓС‰РµСЃС‚РІРёС‚Рµ РІ Common Table Expression (CTE).
 */
 WITH cte AS (
 	SELECT 
@@ -60,7 +60,7 @@ SELECT * FROM #PersonPhone;
 GO
 
 /*
-	d) удалите из таблицы dbo.PersonPhone одну строку (где BusinessEntityID = 275)
+	d) СѓРґР°Р»РёС‚Рµ РёР· С‚Р°Р±Р»РёС†С‹ dbo.PersonPhone РѕРґРЅСѓ СЃС‚СЂРѕРєСѓ (РіРґРµ BusinessEntityID = 275)
 */
 
 DELETE FROM dbo.PersonPhone
@@ -72,11 +72,11 @@ WHERE BusinessEntityID = 275;
 GO
 
 /*
-	e) напишите Merge выражение, использующее dbo.PersonPhone как target, а временную таблицу как source. 
-	Для связи target и source используйте BusinessEntityID. Обновите поля JobTitle, BirthDate и HireDate, 
-	если запись присутствует и в source и в target. Если строка присутствует во временной таблице,
-	но не существует в target, добавьте строку в dbo.PersonPhone. Если в dbo.PersonPhone присутствует такая строка, 
-	которой не существует во временной таблице, удалите строку из dbo.PersonPhone. 
+	e) РЅР°РїРёС€РёС‚Рµ Merge РІС‹СЂР°Р¶РµРЅРёРµ, РёСЃРїРѕР»СЊР·СѓСЋС‰РµРµ dbo.PersonPhone РєР°Рє target, Р° РІСЂРµРјРµРЅРЅСѓСЋ С‚Р°Р±Р»РёС†Сѓ РєР°Рє source. 
+	Р”Р»СЏ СЃРІСЏР·Рё target Рё source РёСЃРїРѕР»СЊР·СѓР№С‚Рµ BusinessEntityID. РћР±РЅРѕРІРёС‚Рµ РїРѕР»СЏ JobTitle, BirthDate Рё HireDate, 
+	РµСЃР»Рё Р·Р°РїРёСЃСЊ РїСЂРёСЃСѓС‚СЃС‚РІСѓРµС‚ Рё РІ source Рё РІ target. Р•СЃР»Рё СЃС‚СЂРѕРєР° РїСЂРёСЃСѓС‚СЃС‚РІСѓРµС‚ РІРѕ РІСЂРµРјРµРЅРЅРѕР№ С‚Р°Р±Р»РёС†Рµ,
+	РЅРѕ РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚ РІ target, РґРѕР±Р°РІСЊС‚Рµ СЃС‚СЂРѕРєСѓ РІ dbo.PersonPhone. Р•СЃР»Рё РІ dbo.PersonPhone РїСЂРёСЃСѓС‚СЃС‚РІСѓРµС‚ С‚Р°РєР°СЏ СЃС‚СЂРѕРєР°, 
+	РєРѕС‚РѕСЂРѕР№ РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚ РІРѕ РІСЂРµРјРµРЅРЅРѕР№ С‚Р°Р±Р»РёС†Рµ, СѓРґР°Р»РёС‚Рµ СЃС‚СЂРѕРєСѓ РёР· dbo.PersonPhone. 
 */		
 SET IDENTITY_INSERT dbo.PersonPhone ON;
 GO

@@ -2,14 +2,14 @@ USE AdventureWorks2012;
 GO
 
 /*
-	a) добавьте в таблицу dbo.PersonPhone поле HireDate типа date;
+	a) РґРѕР±Р°РІСЊС‚Рµ РІ С‚Р°Р±Р»РёС†Сѓ dbo.PersonPhone РїРѕР»Рµ HireDate С‚РёРїР° date;
 */
 ALTER TABLE dbo.PersonPhone ADD HireDate DATE;
 GO
 
 /*
-	b)	объявите табличную переменную с такой же структурой как dbo.PersonPhone и заполните ее данными из dbo.PersonPhone. 
-	Заполните поле HireDate значениями из поля HireDate таблицы HumanResources.Employee;
+	b)	РѕР±СЉСЏРІРёС‚Рµ С‚Р°Р±Р»РёС‡РЅСѓСЋ РїРµСЂРµРјРµРЅРЅСѓСЋ СЃ С‚Р°РєРѕР№ Р¶Рµ СЃС‚СЂСѓРєС‚СѓСЂРѕР№ РєР°Рє dbo.PersonPhone Рё Р·Р°РїРѕР»РЅРёС‚Рµ РµРµ РґР°РЅРЅС‹РјРё РёР· dbo.PersonPhone. 
+	Р—Р°РїРѕР»РЅРёС‚Рµ РїРѕР»Рµ HireDate Р·РЅР°С‡РµРЅРёСЏРјРё РёР· РїРѕР»СЏ HireDate С‚Р°Р±Р»РёС†С‹ HumanResources.Employee;
 */
 DECLARE @personPhone TABLE (
 	BusinessEntityID INT NOT NULL,
@@ -32,7 +32,7 @@ ON pp.BusinessEntityID = emp.BusinessEntityID;
 
 
 /*
-	c) обновите HireDate в dbo.PersonPhone данными из табличной переменной, добавив к HireDate один день;
+	c) РѕР±РЅРѕРІРёС‚Рµ HireDate РІ dbo.PersonPhone РґР°РЅРЅС‹РјРё РёР· С‚Р°Р±Р»РёС‡РЅРѕР№ РїРµСЂРµРјРµРЅРЅРѕР№, РґРѕР±Р°РІРёРІ Рє HireDate РѕРґРёРЅ РґРµРЅСЊ;
 */
 
  UPDATE dbo.PersonPhone
@@ -45,8 +45,8 @@ ON pp.BusinessEntityID = emp.BusinessEntityID;
  GO	
 
  /*
-	d)	удалите данные из dbo.PersonPhone, для тех сотрудников, 
-	у которых почасовая ставка в таблице HumanResources.EmployeePayHistory больше 50;
+	d)	СѓРґР°Р»РёС‚Рµ РґР°РЅРЅС‹Рµ РёР· dbo.PersonPhone, РґР»СЏ С‚РµС… СЃРѕС‚СЂСѓРґРЅРёРєРѕРІ, 
+	Сѓ РєРѕС‚РѕСЂС‹С… РїРѕС‡Р°СЃРѕРІР°СЏ СЃС‚Р°РІРєР° РІ С‚Р°Р±Р»РёС†Рµ HumanResources.EmployeePayHistory Р±РѕР»СЊС€Рµ 50;
  */
  DELETE FROM dbo.PersonPhone
  WHERE EXISTS (
@@ -61,7 +61,7 @@ WHERE Rate > 50;
 GO
 
  /*
-	e)	удалите все созданные ограничения и значения по умолчанию. После этого, удалите поле ID.
+	e)	СѓРґР°Р»РёС‚Рµ РІСЃРµ СЃРѕР·РґР°РЅРЅС‹Рµ РѕРіСЂР°РЅРёС‡РµРЅРёСЏ Рё Р·РЅР°С‡РµРЅРёСЏ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ. РџРѕСЃР»Рµ СЌС‚РѕРіРѕ, СѓРґР°Р»РёС‚Рµ РїРѕР»Рµ ID.
 */
 
 SELECT *
@@ -83,7 +83,7 @@ DROP COLUMN ID;
 GO
 
 /*
-	f)	удалите таблицу dbo.PersonPhone.
+	f)	СѓРґР°Р»РёС‚Рµ С‚Р°Р±Р»РёС†Сѓ dbo.PersonPhone.
 */
 DROP TABLE dbo.PersonPhone;
 GO

@@ -2,7 +2,7 @@ USE AdventureWorks2012;
 GO
 
 /*
-	a)	создайте таблицу dbo.PersonPhone с такой же структурой как Person.PersonPhone, не включая индексы, ограничения и триггеры
+	a)	СЃРѕР·РґР°Р№С‚Рµ С‚Р°Р±Р»РёС†Сѓ dbo.PersonPhone СЃ С‚Р°РєРѕР№ Р¶Рµ СЃС‚СЂСѓРєС‚СѓСЂРѕР№ РєР°Рє Person.PersonPhone, РЅРµ РІРєР»СЋС‡Р°СЏ РёРЅРґРµРєСЃС‹, РѕРіСЂР°РЅРёС‡РµРЅРёСЏ Рё С‚СЂРёРіРіРµСЂС‹
 */
 CREATE TABLE dbo.PersonPhone (
 	BusinessEntityID INT NOT NULL,
@@ -13,16 +13,16 @@ CREATE TABLE dbo.PersonPhone (
 GO
 
 /*
-	b) используя инструкцию ALTER TABLE, добавьте в таблицу dbo.PersonPhone новое поле ID, 
-	которое является уникальным ограничением UNIQUE типа bigint и имеет свойство identity. 
-	Начальное значение для поля identity задайте 2 и приращение задайте 2;
+	b) РёСЃРїРѕР»СЊР·СѓСЏ РёРЅСЃС‚СЂСѓРєС†РёСЋ ALTER TABLE, РґРѕР±Р°РІСЊС‚Рµ РІ С‚Р°Р±Р»РёС†Сѓ dbo.PersonPhone РЅРѕРІРѕРµ РїРѕР»Рµ ID, 
+	РєРѕС‚РѕСЂРѕРµ СЏРІР»СЏРµС‚СЃСЏ СѓРЅРёРєР°Р»СЊРЅС‹Рј РѕРіСЂР°РЅРёС‡РµРЅРёРµРј UNIQUE С‚РёРїР° bigint Рё РёРјРµРµС‚ СЃРІРѕР№СЃС‚РІРѕ identity. 
+	РќР°С‡Р°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ РґР»СЏ РїРѕР»СЏ identity Р·Р°РґР°Р№С‚Рµ 2 Рё РїСЂРёСЂР°С‰РµРЅРёРµ Р·Р°РґР°Р№С‚Рµ 2;
 */
 ALTER TABLE dbo.PersonPhone ADD ID BIGINT IDENTITY(2,2) UNIQUE;
 GO
 
 /*
-	c) используя инструкцию ALTER TABLE, создайте для таблицы dbo.PersonPhone ограничение для поля PhoneNumber, 
-	запрещающее заполнение этого поля буквами;
+	c) РёСЃРїРѕР»СЊР·СѓСЏ РёРЅСЃС‚СЂСѓРєС†РёСЋ ALTER TABLE, СЃРѕР·РґР°Р№С‚Рµ РґР»СЏ С‚Р°Р±Р»РёС†С‹ dbo.PersonPhone РѕРіСЂР°РЅРёС‡РµРЅРёРµ РґР»СЏ РїРѕР»СЏ PhoneNumber, 
+	Р·Р°РїСЂРµС‰Р°СЋС‰РµРµ Р·Р°РїРѕР»РЅРµРЅРёРµ СЌС‚РѕРіРѕ РїРѕР»СЏ Р±СѓРєРІР°РјРё;
 */
 ALTER TABLE dbo.PersonPhone
 ADD CONSTRAINT Check_PhoneNumber
@@ -30,8 +30,8 @@ CHECK (PATINDEX('%[a-zA-Z]%', PhoneNumber) = 0);
 GO
 
 /*
-	d) используя инструкцию ALTER TABLE, создайте для таблицы dbo.PersonPhone ограничение DEFAULT для поля PhoneNumberTypeID, 
-	задайте значение по умолчанию 1;
+	d) РёСЃРїРѕР»СЊР·СѓСЏ РёРЅСЃС‚СЂСѓРєС†РёСЋ ALTER TABLE, СЃРѕР·РґР°Р№С‚Рµ РґР»СЏ С‚Р°Р±Р»РёС†С‹ dbo.PersonPhone РѕРіСЂР°РЅРёС‡РµРЅРёРµ DEFAULT РґР»СЏ РїРѕР»СЏ PhoneNumberTypeID, 
+	Р·Р°РґР°Р№С‚Рµ Р·РЅР°С‡РµРЅРёРµ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ 1;
 */
 ALTER TABLE dbo.PersonPhone
   ADD CONSTRAINT DF_PhoneNumberTypeID
@@ -39,10 +39,10 @@ ALTER TABLE dbo.PersonPhone
 GO
 
 /*
-	e) заполните новую таблицу данными из Person.PersonPhone, 
-	где поле PhoneNumber не содержит символов ‘(‘ и ‘)’ и только для тех сотрудников, 
-	которые существуют в таблице HumanResources.Employee, 
-	а их дата принятия на работу совпадает с датой начала работы в отделе;
+	e) Р·Р°РїРѕР»РЅРёС‚Рµ РЅРѕРІСѓСЋ С‚Р°Р±Р»РёС†Сѓ РґР°РЅРЅС‹РјРё РёР· Person.PersonPhone, 
+	РіРґРµ РїРѕР»Рµ PhoneNumber РЅРµ СЃРѕРґРµСЂР¶РёС‚ СЃРёРјРІРѕР»РѕРІ вЂ(вЂ Рё вЂ)вЂ™ Рё С‚РѕР»СЊРєРѕ РґР»СЏ С‚РµС… СЃРѕС‚СЂСѓРґРЅРёРєРѕРІ, 
+	РєРѕС‚РѕСЂС‹Рµ СЃСѓС‰РµСЃС‚РІСѓСЋС‚ РІ С‚Р°Р±Р»РёС†Рµ HumanResources.Employee, 
+	Р° РёС… РґР°С‚Р° РїСЂРёРЅСЏС‚РёСЏ РЅР° СЂР°Р±РѕС‚Сѓ СЃРѕРІРїР°РґР°РµС‚ СЃ РґР°С‚РѕР№ РЅР°С‡Р°Р»Р° СЂР°Р±РѕС‚С‹ РІ РѕС‚РґРµР»Рµ;
 */
 INSERT INTO dbo.PersonPhone
 SELECT 
@@ -62,7 +62,7 @@ SELECT * FROM dbo.PersonPhone;
 GO
 
 /*
-	f) измените поле PhoneNumber, разрешив добавление null значений.
+	f) РёР·РјРµРЅРёС‚Рµ РїРѕР»Рµ PhoneNumber, СЂР°Р·СЂРµС€РёРІ РґРѕР±Р°РІР»РµРЅРёРµ null Р·РЅР°С‡РµРЅРёР№.
 */
 ALTER TABLE dbo.PersonPhone
 ALTER COLUMN PhoneNumber NVARCHAR(25) NULL;
