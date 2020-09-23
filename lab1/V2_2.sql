@@ -24,5 +24,5 @@ GO
 */
 SELECT TOP 5 BusinessEntityID, JobTitle, Gender, BirthDate, HireDate 
 FROM HumanResources.Employee
-WHERE YEAR(HireDate) - 18 = YEAR(BirthDate);
+WHERE DATEDIFF(YEAR, BirthDate, HireDate) > 18;
 GO
